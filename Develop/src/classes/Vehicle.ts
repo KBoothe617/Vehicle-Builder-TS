@@ -16,9 +16,26 @@ class Vehicle implements Driveable {
   wheels: Wheel[];
 
   // Constructor for the Vehicle class
-  constructor() {
+  constructor(
+    vin: string,
+    color: string,
+    make: string,
+    model: string,
+    year: number,
+    weight: number,
+    topSpeed: number,
+    wheels: Wheel[]
+  ) {
     this.started = false;
     this.currentSpeed = 0;
+    this.vin = vin;
+    this.color = color;
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    this.weight = weight;
+    this.topSpeed = topSpeed;
+    this.wheels = wheels;
   }
 
   // Method to print vehicle details
