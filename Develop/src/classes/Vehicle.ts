@@ -40,6 +40,14 @@ class Vehicle implements Driveable {
 
   // Method to print vehicle details
   printDetails(): void {
+    console.log(`Vehicle VIN: ${this.vin}`);
+    console.log(`Vehicle color: ${this.color}`);
+    console.log(`Vehicle make: ${this.make}`);
+    console.log(`Vehicle model: ${this.model}`);
+    console.log(`Vehicle year: ${this.year}`);
+    console.log(`Vehicle weight: ${this.weight} lbs`);
+    console.log(`Vehicle top speed: ${this.topSpeed} mph`);
+    console.log(`Vehicle wheels: ${this.wheels.length}`);
     console.log(`Vehicle started: ${this.started}`);
     console.log(`Vehicle current speed: ${this.currentSpeed} mph`);
   }
