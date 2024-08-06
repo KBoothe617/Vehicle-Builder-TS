@@ -393,9 +393,10 @@ class Cli {
         else if (answers.action === 'Tow a vehicle' && selectedVehicle instanceof Truck) {
           this.findVehicleToTow(selectedVehicle);
           return;
+        } // Add closing brace here
         // TODO: add statements to perform the wheelie action only if the selected vehicle is a motorbike
         else if (answers.action === 'Perform a wheelie' && selectedVehicle instanceof Motorbike) {
-          selectedVehicle.wheelie();
+          (selectedVehicle as Motorbike).wheelie();
         } 
         else if (answers.action === 'Select or create another vehicle') {
           // start the cli to return to the initial prompt if the user wants to select or create another vehicle
