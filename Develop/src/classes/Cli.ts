@@ -36,12 +36,10 @@ class Cli {
           type: 'list',
           name: 'selectedVehicleVin',
           message: 'Select a vehicle to perform an action on',
-          choices: this.vehicles.map((vehicle) => {
-            return {
-              name: `${vehicle.vin} -- ${vehicle.make} ${vehicle.model}`,
-              value: vehicle.vin,
-            };
-          }),
+          choices: this.vehicles.map((vehicle) => ({
+            name: `${vehicle.vin} -- ${vehicle.make} ${vehicle.model}`,
+            value: vehicle.vin,
+          })),
         },
       ])
       .then((answers) => {
@@ -188,7 +186,7 @@ class Cli {
           parseInt(answers.weight),
           parseInt(answers.topSpeed),
           [],
-          parseInt(answers.towingCapacity),
+          parseInt(answers.towingCapacity)
         );
         this.vehicles.push(truck);
         this.selectedVehicleVin = truck.vin;
@@ -266,7 +264,7 @@ class Cli {
           parseInt(answers.year),
           parseInt(answers.weight),
           parseInt(answers.topSpeed),
-          [frontWheel, rearWheel],
+          [frontWheel, rearWheel]
         );
         this.vehicles.push(motorbike);
         this.selectedVehicleVin = motorbike.vin;
@@ -283,23 +281,21 @@ class Cli {
           type: 'list',
           name: 'vehicleToTow',
           message: 'Select a vehicle to tow',
-          choices: this.vehicles.map((vehicle) => {
-            return {
-              name: `${vehicle.vin} -- ${vehicle.make} ${vehicle.model}`,
-              value: vehicle,
-            };
-          }),
+          choices: this.vehicles.filter(vehicle => vehicle.vin !== truck.vin).map((vehicle) => ({
+            name: `${vehicle.vin} -- ${vehicle.make} ${vehicle.model}`,
+            value: vehicle.vin,
+          })),
         },
       ])
       .then((answers) => {
         // TODO: check if the selected vehicle is the truck
         // TODO: if it is, log that the truck cannot tow itself then perform actions on the truck to allow the user to select another action
         // TODO: if it is not, tow the selected vehicle then perform actions on the truck to allow the user to select another action
-        const vehicleToTow = answers.vehicleToTow;
+        const vehicleToTow = this.vehicles.find(vehicle => vehicle.vin === answers.vehicleToTow);
         if (vehicleToTow instanceof Truck) {
           console.log('A truck cannot tow itself');
           this.performActions();
-        } else {
+        } else if (vehicleToTow) {
           truck.tow(vehicleToTow);
           this.performActions();
         }
@@ -308,6 +304,9 @@ class Cli {
 
   // method to perform actions on a vehicle
   performActions(): void {
+    const selectedVehicle = this.vehicles.find(vehicle => vehicle.vin === this.selectedVehicleVin);
+    if (!selectedVehicle) return;
+
     inquirer
       .prompt([
         {
@@ -420,8 +419,7 @@ class Cli {
         {
           type: 'list',
           name: 'CreateOrSelect',
-          message:
-            'Would you like to create a new vehicle or perform an action on an existing vehicle?',
+          message: 'Would you like to create a new vehicle or perform an action on an existing vehicle?',
           choices: ['Create a new vehicle', 'Select an existing vehicle'],
         },
       ])
